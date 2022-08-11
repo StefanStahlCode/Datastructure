@@ -105,41 +105,41 @@ class BinaryTree:
 
     #normal Binary Tree search function
     def search(self, search_value):
-        bool_list = []
-        bool_list.append(self.preorder_search(self.root, search_value, bool_list))
-        if True in bool_list:
+        boo = False
+        boo = self.preorder_search(self.root, search_value, boo)
+        return boo
+
+
+    def preorder_search(self, curr, search_value, boo):
+        if boo == True:
             return True
-        return False
-
-
-    def preorder_search(self, curr, search_value, bool_list):
         if curr.value == search_value:
-            bool_list.append(True)
+            boo = True
         if curr.left:
-            self.preorder_search(curr.left, search_value, bool_list)
+            boo = self.preorder_search(curr.left, search_value, boo)
         if curr.right:
-            self.preorder_search(curr.right, search_value, bool_list)
-        return bool_list
+            boo = self.preorder_search(curr.right, search_value, boo)
+        return boo
 
         
     # Binary Search Tree search function
     def search_BST(self, search_value):
-        ret_list = []
-        ret_list.append(self.search_BST_preorder(self.root, search_value, ret_list))
-        if True in ret_list:
-            return True
-        return False
+        boo = False
+        boo = self.preorder_search(self.root, search_value, boo)
+        return boo
 
-    def search_BST_preorder(self, curr, search_value, ret_list):
+    def search_BST_preorder(self, curr, search_value, boo):
+        if boo == True:
+            return True
         if curr.value == search_value:
-            ret_list.append(True)
+            boo = True
         elif search_value < curr.value:
             if curr.left:
-                self.search_BST_preorder(curr.left, search_value, ret_list)
+                boo = self.search_BST_preorder(curr.left, search_value, ret_list)
         else:
             if curr.right:
-                self.search_BST_preorder(curr.right, search_value, ret_list)
-        return ret_list
+                boo = self.search_BST_preorder(curr.right, search_value, ret_list)
+        return boo 
 
 root = BinaryTree(12)
 root.insert(6)
