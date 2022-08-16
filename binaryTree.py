@@ -9,6 +9,8 @@
 #the following code has a binary search tree
 #includes both a search function for normal and BSt Trees
 
+
+
 class Node:
     def __init__(self, value = None):
         self.value = value
@@ -22,29 +24,25 @@ class BinaryTree:
         self.current = self.root #Node to move around
     #simple insert method for BST
     def insert(self, value):
-        #reset current to root
-        self.current = self.root
         #start recursion
-        self.insert_help(value)
+        self.insert_help(value, self.root)
         
-    def insert_help(self, value):
-        if self.current:
-            if self.current.value > value:
-                if self.current.left is None:
-                    self.current.left = Node(value)
+    def insert_help(self, value, curr):
+        if curr:
+            if curr.value > value:
+                if curr.left is None:
+                    curr.left = Node(value)
                 else:
-                    self.current = self.current.left
-                    self.insert_help(value)
+                    self.insert_help(value, curr.left)
             else:
-                if self.current.right  is None:
-                    self.current.right = Node(value)
+                if curr.right is None:
+                    curr.right = Node(value)
                 else:
-                    self.current = self.current.right
-                    self.insert_help(value)
+                    self.insert_help(value, curr.right)
 
         else:
             self.current = Node(value)
-
+        
 
     #in Order traversal, start with left subtree, root, right subtree
     def printTree(self):
@@ -60,21 +58,17 @@ class BinaryTree:
 
     #pre order traversal: root visited first, then left, then right, here return as list, converted to string
     def print_pre_order(self):
-        ret_value = []
-        ret_value.append(self.print_pre_order_helper(self.root, ret_value))
         ret_str = ""
-        ret_value.pop()
-        for x in ret_value:
-            ret_str = ret_str + str(x) + "-"
+        ret_str = ret_str + self.print_pre_order_helper(self.root, ret_str)
         print(ret_str[:-1])
 
-    def print_pre_order_helper(self, curr, ret_value):
-        ret_value.append(curr.value)
+    def print_pre_order_helper(self, curr, ret_str):
+        ret_str = ret_str + str(curr.value) + "-"
         if curr.left:
-            self.print_pre_order_helper(curr.left, ret_value)
+            ret_str = self.print_pre_order_helper(curr.left, ret_str)
         if curr.right:
-            self.print_pre_order_helper(curr.right, ret_value)
-        return ret_value
+            ret_str = self.print_pre_order_helper(curr.right, ret_str)
+        return ret_str
 
 
     # function to compare preorder fucntion, which returns a string, should have named it better
